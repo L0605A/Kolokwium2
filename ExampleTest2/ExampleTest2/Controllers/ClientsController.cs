@@ -24,9 +24,9 @@ public class CharactersController : ControllerBase
         {
             return NotFound($"Character with given ID - {characterId} doesn't exist");
         }
-        var backpack = await _dbService.GetCharacter(characterId);
+        var chara = await _dbService.GetCharacter(characterId);
         
-        return Ok(backpack);
+        return Ok(chara);
     }
     
     [HttpPost("characters/{characterId}/backpacks")]
