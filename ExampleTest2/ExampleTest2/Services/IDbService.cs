@@ -5,6 +5,7 @@ namespace ExampleTest2.Services;
 
 public interface IDbService
 {
+    Task<bool> DoesClientExist(int id);
     Task<bool> DoesItemExist(int id);
     Task<bool> IsWeightValid(int charId, List<int> items);
     

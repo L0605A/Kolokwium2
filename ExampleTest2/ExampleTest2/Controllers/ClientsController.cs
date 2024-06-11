@@ -19,6 +19,11 @@ public class CharactersController : ControllerBase
     [HttpGet("characters/{characterId}")]
     public async Task<IActionResult> GetCharacter(int characterId)
     {
+        
+        if (!(await _dbService.DoesClientExist(characterId)))
+        {
+            return NotFound($"Character with given ID - {characterId} doesn't exist");
+        }
         var backpack = await _dbService.GetCharacter(characterId);
         
         return Ok(backpack);

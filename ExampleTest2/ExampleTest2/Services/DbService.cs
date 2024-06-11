@@ -13,6 +13,11 @@ public class DbService : IDbService
         _context = context;
     }
     
+    public async Task<bool> DoesClientExist(int id)
+    {
+        return await _context.Characters.AnyAsync(e => e.Id == id);
+    }
+    
     public async Task<bool> DoesItemExist(int id)
     {
         return await _context.Items.AnyAsync(e => e.Id == id);
@@ -96,8 +101,8 @@ public class DbService : IDbService
     {
         var character = await _context.Characters.Where(e => e.Id == charId).FirstOrDefaultAsync();
         
-        var backpacks = _context.Backpacks.Where(e => e.CharacterId == charId);
-        var titles = _context.CharacterTitles.Where(e => e.CharacterId == charId);
+        var backpacks = await _context.Backpacks.Where(e => e.CharacterId == charId).ToListAsync();
+        var titles = await _context.CharacterTitles.Where(e => e.CharacterId == charId).ToListAsync();
 
         List<BackpackResponseDTO> backpackDtos = new List<BackpackResponseDTO>();
         List<TitlesDTO> titlesDtos = new List<TitlesDTO>();
